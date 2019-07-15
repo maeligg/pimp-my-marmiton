@@ -14,8 +14,6 @@ const T = new Twit({
 
 const lyricist = new Lyricist(process.env.GENIUS_ACCESS_TOKEN);
 
-app.use(express.static('public'));
-
 app.all('/post', async (req, res) => {
 	let allLyrics = '';
 
@@ -52,9 +50,10 @@ app.all('/post', async (req, res) => {
 			}
 		});
 	});
+  
+  console.log('')
 
 	generateMarkov(allLyrics);
-  res.sendStatus(200);
 });
 
 const generateMarkov = string => {
