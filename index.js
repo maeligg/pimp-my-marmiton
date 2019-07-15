@@ -1,10 +1,9 @@
 const Twit = require('twit');
 const Lyricist = require('lyricist/node6');
 const MarkovChain = require('markovchain');
+const express = require('express')
 
-// Uncomment these 2 lines if running locally (see readme for more details)
-// const config = require('./config.js');
-// process.env = config;
+const app = express()
 
 const T = new Twit({
 	consumer_key: process.env.consumer_key,
@@ -15,7 +14,9 @@ const T = new Twit({
 
 const lyricist = new Lyricist(process.env.GENIUS_ACCESS_TOKEN);
 
-const getLyrics = async () => {
+app.use(express.static('public'));
+
+app.all('/post', async (req, res) => {
 	let allLyrics = '';
 
 	// Set your artist ID as an environment variable.
@@ -53,11 +54,8 @@ const getLyrics = async () => {
 	});
 
 	generateMarkov(allLyrics);
-	// Generate new lyrics and tweet every 3 hours
-	setInterval(() => {
-		generateMarkov(allLyrics);
-	}, 1000 * 60 * 60 * 3);
-};
+  res.sendStatus(200);
+});
 
 const generateMarkov = string => {
 	const markov = new MarkovChain(string);
@@ -87,5 +85,3 @@ const postTweet = tweetContent => {
 		}
 	});
 };
-
-getLyrics();

@@ -9,6 +9,7 @@
   "author": "Maël Brunet",
   "license": "ISC",
   "dependencies": {
+    "express": "4.x",
     "eslint": "^4.19.1",
     "lyricist": "^2.2.2",
     "markovchain": "^1.0.2",
