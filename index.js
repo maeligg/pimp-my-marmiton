@@ -4,6 +4,7 @@ const MarkovChain = require('markovchain');
 const express = require('express')
 
 const app = express()
+app.use(express.static('public'));
 
 const T = new Twit({
 	consumer_key: process.env.consumer_key,
@@ -13,8 +14,6 @@ const T = new Twit({
 });
 
 const lyricist = new Lyricist(process.env.GENIUS_ACCESS_TOKEN);
-
-app.use(express.static('public'));
 
 app.all('/post', async (req, res) => {
 	let allLyrics = '';
@@ -90,3 +89,7 @@ const postTweet = tweetContent => {
 		}
 	});
 };
+
+const listener = app.listen(process.env.PORT, function () {
+  console.log(`your bot is running on port ${listener.address().port}`);
+});
