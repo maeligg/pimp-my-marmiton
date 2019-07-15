@@ -14,8 +14,9 @@ const T = new Twit({
 
 const lyricist = new Lyricist(process.env.GENIUS_ACCESS_TOKEN);
 
+app.use(express.static('public'));
+
 app.all('/post', async (req, res) => {
-  res.sendStatus(200)
 	let allLyrics = '';
 
 	// Set your artist ID as an environment variable.
@@ -55,6 +56,8 @@ app.all('/post', async (req, res) => {
   console.log('songs data fetched successfully');
 
 	generateMarkov(allLyrics);
+  
+  res.sendStatus(200);
 });
 
 const generateMarkov = string => {
