@@ -51,9 +51,11 @@ app.all('/post', async (req, res) => {
 		});
 	});
   
-  console.log('')
+  console.log('songs data fetched successfully');
 
 	generateMarkov(allLyrics);
+  
+  res.sendStatus(200);
 });
 
 const generateMarkov = string => {
@@ -70,6 +72,8 @@ const generateMarkov = string => {
 	newLyrics = newLyrics.replace(/([,!] )(\w)/g, (match, $1, $2) => {
 		return $1 + '\n' + $2.toUpperCase();
 	});
+  
+  console.log('markov chain generated successfully');
 
 	postTweet(newLyrics);
 };
