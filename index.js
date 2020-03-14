@@ -25,7 +25,9 @@ app.all('/post', async (req, res) => {
   .then(function (response) {
     console.log('data fetched successfully');
     
-    const snippet = response.data.items[0].snippet;
+    const snippet = response.data.items[0].snippet
+      .replace(/\n/g, '')
+      .replace(/^\d+ \w+ \d{4} ... /g, '');
     const url = response.data.items[0].link;
     
     postTweet(snippet + url);
