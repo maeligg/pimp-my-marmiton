@@ -26,7 +26,9 @@ app.all('/post', async (req, res) => {
     console.log('data fetched successfully');
     
     const snippet = response.data.items[0].snippet
+      // Remove line breaks 
       .replace(/\n/g, '')
+      // Remove dates sometimes added at beginning of string
       .replace(/^\d+ \w+ \d{4} ... /g, '');
     const url = response.data.items[0].link;
     
