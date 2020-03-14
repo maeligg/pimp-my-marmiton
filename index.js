@@ -1,6 +1,4 @@
 const Twit = require('twit');
-const Lyricist = require('lyricist/node6');
-const MarkovChain = require('markovchain');
 const express = require('express')
 
 const app = express()

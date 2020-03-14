@@ -1,7 +1,7 @@
 {
-  "name": "markov-lyrics-bot",
+  "name": "pimp-my-marmiton",
   "version": "1.0.0",
-  "description": "A Twitter bot generating new Lyrics from an artist using Markov chains",
+  "description": "Un bot twitter qui poste des suggestions de modification de recettes des commentaires de https://www.marmiton.org/",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
@@ -11,8 +11,6 @@
   "dependencies": {
     "express": "4.x",
     "eslint": "^4.19.1",
-    "lyricist": "^2.2.2",
-    "markovchain": "^1.0.2",
     "twit": "^2.2.10"
   },
   "devDependencies": {
