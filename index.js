@@ -11,71 +11,14 @@ const T = new Twit({
 	access_token_secret: process.env.access_token_secret
 });
 
-const lyricist = new Lyricist(process.env.GENIUS_ACCESS_TOKEN);
-
 app.all('/post', async (req, res) => {
-	let allLyrics = '';
 
-	// Set your artist ID as an environment variable.
-	// Make a first call to retrieve the first 50 songs of the artist
-	const songList = await lyricist.songsByArtist(process.env.artist_id, {
-		page: 1,
-		perPage: 50
-	});
 
-	// For each song, we have to scrape the lyrics (as they are not available through the API)
-	const songs = await Promise.all(
-		Array.from(songList)
-			.map(song => {
-				return lyricist.song(song.id, { fetchLyrics: true }).catch(() => {
-					return false;
-				});
-			})
-			// Filter out rejected promises
-			// @TODO improve the way rejected promises are handled
-			.filter(song => {
-				if (!!song) {
-					return song;
-				}
-			})
-	);
-
-	// For convenience, we add lyrics from all the songs into a single string
-	Array.from(songs).forEach(song => {
-		const songArray = song.lyrics.split('\n');
-		songArray.forEach(songLine => {
-			if (songLine && songLine[0] !== '[') {
-				allLyrics += songLine + '\n';
-			}
-		});
-	});
   
   console.log('songs data fetched successfully');
-
-	generateMarkov(allLyrics);
   
   res.sendStatus(200);
 });
-
-const generateMarkov = string => {
-	const markov = new MarkovChain(string);
-
-	let newLyrics = markov.end(30).process(); // Set the word limit to 30
-	// If the new lyrics are too short or are over Twitter's 280 characters limit, we just generate some new ones
-	if (newLyrics.length < 20 || newLyrics.length > 280) {
-		generateMarkov(string);
-	}
-
-	// Prettify the output
-	newLyrics = newLyrics.charAt(0).toUpperCase() + newLyrics.slice(1);
-	newLyrics = newLyrics.replace(/([,!] )(\w)/g, (match, $1, $2) => {
-		return $1 + '\n' + $2.toUpperCase();
-	});
-  
-  console.log('markov chain generated successfully');
-
-	postTweet(newLyrics);
-};
 
 // Publish the tweet
 const postTweet = tweetContent => {
