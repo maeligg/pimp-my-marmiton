@@ -23,8 +23,12 @@ app.all('/post', async (req, res) => {
     }
   })
   .then(function (response) {
+    console.log('data fetched successfully');
     
+    const snippet = response.data.items[0].snippet;
+    const url = response.data.items[0].link;
     
+    postTweet(snippet + url);
   })
   .catch(function (error) {
     // handle error
