@@ -17,9 +17,9 @@ const T = new Twit({
 const postTweet = tweetContent => {
 	T.post('statuses/update', { status: tweetContent }, (err, data, resp) => {
 		if (err) {
-			console.log('error: ', err);
+			return console.log('error: ', err);
 		} else {
-			console.log('response: ', resp);
+			return console.log('response: ', resp);
 		}
 	});
 };
@@ -43,7 +43,7 @@ axios.get('https://www.googleapis.com/customsearch/v1', {
       .replace(/^\d+ \w+ \d{4} ... /g, '');
     const url = response.data.items[0].link;
     
-    return postTweet(snippet + url);
+    postTweet(snippet + url);
   })
   .catch(function (error) {
     // handle error
