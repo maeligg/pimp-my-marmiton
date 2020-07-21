@@ -43,12 +43,9 @@ axios.get('https://www.googleapis.com/customsearch/v1', {
       .replace(/^\d+ \w+ \d{4} ... /g, '');
     const url = response.data.items[0].link;
     
-    postTweet(snippet + url);
+    return postTweet(snippet + url);
   })
   .catch(function (error) {
     // handle error
-    console.log(error);
+    return console.log(error);
   })
-  .finally(function () {
-    res.sendStatus(200);
-  });
