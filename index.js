@@ -44,6 +44,7 @@ axios.get('https://www.googleapis.com/customsearch/v1', {
     const url = response.data.items[0].link;
     
     postTweet(snippet + url);
+    return;
   })
   .catch(function (error) {
     // handle error
