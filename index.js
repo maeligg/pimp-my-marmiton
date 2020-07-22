@@ -15,11 +15,11 @@ const T = new Twit({
 
 // Publish the tweet
 const postTweet = tweetContent => {
-	T.post('statuses/update', { status: tweetContent }, (err, data, resp) => {
+	T.post('statuses/update', { status: tweetContent }, (err) => {
 		if (err) {
 			return console.log('error: ', err);
 		} else {
-			return console.log('response: ', resp);
+			return console.log('tweeted successfully');
 		}
 	});
 };
